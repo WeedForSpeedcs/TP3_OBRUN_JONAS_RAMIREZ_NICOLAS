@@ -3,9 +3,10 @@
     <h2>Bienvenue sur la page d'accueil !</h2>
     <p>Voici quelques exemples de boutons :</p>
     <div class="button-group">
-      <BaseButton>Bouton Actif</BaseButton>
+      <BaseButton>Bouton Primary (défaut)</BaseButton>
       <BaseButton disabled>Bouton Désactivé</BaseButton>
-      <BaseButton style="background-color: blue;">Bouton Stylisé</BaseButton>
+      <BaseButton color="warn">Bouton Warn</BaseButton>
+      <BaseButton color="danger">Bouton Danger</BaseButton>
     </div>
   </div>
 </template>
