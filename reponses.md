@@ -75,3 +75,13 @@ Lorsque tu ajoutes l'attribut `scoped` à une balise `<style>` (`<style scoped>`
     - **Plus sûr :** Moins de risques d'effets de bord imprévus.
 - **Inconvénients :** Les styles scoped ne peuvent pas directement affecter les éléments enfants d'un autre composant. Si tu as besoin de styliser un élément enfant provenant d'un slot ou d'un composant externe, tu devras soit utiliser des sélecteurs plus spécifiques (`>>>` ou `/deep/` dans les versions précédentes, ou des sélecteurs combinés dans Vue 3), soit passer des props, ou encore utiliser un style global volontairement pour ces cas spécifiques.
 
+
+# Réponse à la Question 6
+
+**Comment se comportent les attributs non-prop passés à un composant, lorsque son template a un seul élément racine ?**
+
+Lorsque tu passes des attributs à un composant Vue qui ne sont pas explicitement déclarés comme des `props` dans le composant enfant, on les appelle des **attributs non-prop**.
+
+Si le template du composant enfant a un **seul élément racine**, Vue.js applique automatiquement ces attributs non-prop à cet élément racine. C'est un comportement très pratique pour que les attributs HTML standards (comme `class`, `style`, `id`, `role`, `data-*`, etc.) fonctionnent comme prévu, même lorsqu'ils sont appliqués à un composant personnalisé.
+
+
