@@ -52,3 +52,26 @@ Dans le fichier `package.json` ou dans un fichier `.browserslistrc` :
 ]
 ```
 Cela indique à Babel (et à d'autres outils comme Autoprefixer) quels navigateurs doivent être pris en compte lors de la génération du code final.
+
+
+# Réponse à la Question 5
+
+**Quelle est la différence entre le CSS scoped et non-scoped ?**
+
+### CSS non-scoped (ou global)
+
+Lorsque tu écris du CSS dans une balise `<style>` sans l'attribut `scoped`, les règles CSS que tu définis sont **globales**. Cela signifie qu'elles s'appliquent à l'ensemble de ton application Vue.js, et non pas seulement au composant dans lequel elles sont déclarées.
+
+- **Avantages :** Utile pour les styles généraux de l'application (par exemple, les styles du `body`, les typographies par défaut, les classes utilitaires globales).
+- **Inconvénients :** Risque de conflits de noms de classes. Si tu as deux composants différents avec la même classe CSS (par exemple, `.button`), les styles du dernier composant chargé peuvent écraser les styles du premier, ce qui peut causer des comportements inattendus. Cela rend la maintenance plus difficile à mesure que l'application grandit.
+
+### CSS scoped
+
+Lorsque tu ajoutes l'attribut `scoped` à une balise `<style>` (`<style scoped>`), les règles CSS que tu y définis sont **limitées au composant actuel**. Vue.js (grâce à `vue-loader` avec Webpack) modifie les sélecteurs CSS pour qu'ils soient uniques à ce composant. En pratique, Vue ajoute des attributs de données (`data-v-xxxxxx`) uniques à chaque élément du template et aux règles CSS correspondantes.
+
+- **Avantages :**
+    - **Isolation des styles :** Les styles d'un composant n'affectent pas les autres composants, ce qui évite les conflits et facilite la réutilisabilité.
+    - **Maintenance facile :** Tu sais que les styles que tu modifies dans un composant `scoped` n'impacteront pas le reste de l'application.
+    - **Plus sûr :** Moins de risques d'effets de bord imprévus.
+- **Inconvénients :** Les styles scoped ne peuvent pas directement affecter les éléments enfants d'un autre composant. Si tu as besoin de styliser un élément enfant provenant d'un slot ou d'un composant externe, tu devras soit utiliser des sélecteurs plus spécifiques (`>>>` ou `/deep/` dans les versions précédentes, ou des sélecteurs combinés dans Vue 3), soit passer des props, ou encore utiliser un style global volontairement pour ces cas spécifiques.
+
