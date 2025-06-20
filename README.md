@@ -1,5 +1,11 @@
 # vue-oauth-microsoft-graph
 
+## Réponses aux questions
+```
+Les réponses aux questions sont dans le fichier reponses.md
+```
+
+
 ## Project setup
 ```
 npm install
