@@ -24,12 +24,19 @@ export default {
     BaseButton,
     AsyncButton,
   },
+  data() {
+    return {
+      asyncClickCount: 0,
+    }
+  },
   methods: {
     simulateAsyncClick() {
+      this.asyncClickCount++;
+      const waitTime = 2000 + (this.asyncClickCount - 1) * 1000;
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve();
-        }, 2000);
+        }, waitTime);
       });
     },
   },

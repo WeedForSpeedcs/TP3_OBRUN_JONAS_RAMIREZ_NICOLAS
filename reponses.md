@@ -1,6 +1,5 @@
 # Réponse à la Question 1
 
-**Quelle est la principale différence entre l'installation locale et l'installation globale des paquets avec npm ?**
 
 La principale différence réside dans l'endroit où les paquets sont installés et leur accessibilité :
 
@@ -19,7 +18,6 @@ La principale différence réside dans l'endroit où les paquets sont installés
 
 # Réponse à la Question 2
 
-**Pourquoi Webpack est-il utilisé en interne et pourquoi est-il nécessaire pour gérer à la fois plusieurs fichiers JavaScript et des extensions spéciales comme .vue ?**
 
 Webpack est utilisé car il permet de :
 
@@ -36,7 +34,6 @@ Webpack est utilisé car il permet de :
 
 # Réponse à la Question 3
 
-**Quel est le rôle de Babel et comment browserslist peut-il configurer sa sortie ?**
 
 Babel est un outil de transpilation JavaScript. Son rôle principal est de convertir du code JavaScript moderne (ES6+ ou JSX, TypeScript, etc.) en une version plus ancienne et compatible avec un plus grand nombre de navigateurs. Cela permet d'utiliser les dernières fonctionnalités du langage sans se soucier de la compatibilité avec les navigateurs plus anciens.
 
@@ -56,7 +53,6 @@ Cela indique à Babel (et à d'autres outils comme Autoprefixer) quels navigateu
 
 # Réponse à la Question 5
 
-**Quelle est la différence entre le CSS scoped et non-scoped ?**
 
 ### CSS non-scoped (ou global)
 
@@ -78,10 +74,20 @@ Lorsque tu ajoutes l'attribut `scoped` à une balise `<style>` (`<style scoped>`
 
 # Réponse à la Question 6
 
-**Comment se comportent les attributs non-prop passés à un composant, lorsque son template a un seul élément racine ?**
-
 Lorsque tu passes des attributs à un composant Vue qui ne sont pas explicitement déclarés comme des `props` dans le composant enfant, on les appelle des **attributs non-prop**.
 
 Si le template du composant enfant a un **seul élément racine**, Vue.js applique automatiquement ces attributs non-prop à cet élément racine. C'est un comportement très pratique pour que les attributs HTML standards (comme `class`, `style`, `id`, `role`, `data-*`, etc.) fonctionnent comme prévu, même lorsqu'ils sont appliqués à un composant personnalisé.
+
+# Réponse à la Question 7
+
+Le composant `AsyncButton` fonctionne en recevant une fonction de gestion d'événement (handler) via l'attribut `onClick` passé par le parent. Lorsqu'on clique sur le bouton, la méthode `handleClick` du composant enfant est appelée. Cette méthode récupère la fonction `onClick` depuis les attributs (`this.$attrs.onClick`), l'exécute, et attend qu'elle retourne une Promise. Ainsi, le composant enfant est "conscient" de la Promise retournée par le parent, car il l'utilise directement.
+
+Le callback passé à `.finally()` est exécuté lorsque la Promise est soit résolue (succès), soit rejetée (erreur). Cela permet de garantir que le bouton sera réactivé dans tous les cas, peu importe le résultat de la Promise.
+
+On utilise `.finally()` au lieu de `.then()` car `.then()` ne s'exécute qu'en cas de succès, alors que `.finally()` s'exécute toujours, que la Promise soit résolue ou rejetée. Cela évite de dupliquer le code de réactivation du bouton dans les deux cas (`then` et `catch`).
+
+# Réponse à la Question 8
+
+Si `inheritAttrs: false` est manquant ou mis à `true` dans `AsyncButton`, tous les attributs non explicitement définis comme props seront automatiquement ajoutés à l'élément racine du composant (ici `<base-button>`). Cela pose problème car l'attribut `onClick` serait passé directement au composant enfant, qui risquerait de déclencher l'événement deux fois : une fois via le handler personnalisé, et une fois via l'attribut natif. Cela peut provoquer des comportements inattendus, comme plusieurs exécutions de la fonction ou des erreurs. En mettant `inheritAttrs: false`, on garde le contrôle total sur la gestion des attributs et on évite ce bug. 
 
 
